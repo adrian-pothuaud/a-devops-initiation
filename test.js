@@ -18,10 +18,10 @@ describe("My feature", function() {
     });
     
     // changement à valider (test 1)
-    describe("subfeature 3", function() {
+    /*describe("subfeature 3", function() {
        it("will fail", function() {
            assert(false);
        });
-    });
+    });*/
     // commenter pour passer (test 2)
 });

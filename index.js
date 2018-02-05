@@ -5,7 +5,7 @@ const requestIp = require('request-ip');
 
 const PORT = process.env.PORT || 5000;
 
-var clientRequestSchema = require('../schemas/clientRequest');
+var clientRequestSchema = require('./schemas/clientRequest');
 var clientRequest = mongoose.model('Blog', clientRequestSchema);
 
 mongoose.connect(
@@ -36,6 +36,10 @@ mongoose.connection
                 if (err) throw err;
                 res.render('pages/index');
             });
+        })
+        
+        .get('/tests', (req, res) => {
+            res.sendFile(__dirname + '/public/mochawesome.html');
         })
 
         .listen(PORT, () => console.log(`Listening on ${ PORT }`));

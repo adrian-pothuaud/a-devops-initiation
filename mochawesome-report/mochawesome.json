@@ -1,14 +1,14 @@
 {
   "stats": {
-    "suites": 3,
-    "tests": 4,
-    "passes": 4,
+    "suites": 4,
+    "tests": 5,
+    "passes": 5,
     "pending": 0,
     "failures": 0,
-    "start": "2018-02-03T07:16:19.033Z",
-    "end": "2018-02-03T07:16:19.044Z",
-    "duration": 11,
-    "testsRegistered": 4,
+    "start": "2018-02-05T19:00:09.915Z",
+    "end": "2018-02-05T19:00:10.692Z",
+    "duration": 777,
+    "testsRegistered": 5,
     "passPercent": 100,
     "pendingPercent": 0,
     "other": 0,
@@ -19,7 +19,7 @@
     "pendingPercentClass": "danger"
   },
   "suites": {
-    "uuid": "d1f67f46-6230-4cc6-8649-cd2b600b3a8e",
+    "uuid": "f31e378e-98d6-4cfc-9d85-804bb5fafa09",
     "title": "",
     "fullFile": "",
     "file": "",
@@ -28,19 +28,73 @@
     "tests": [],
     "suites": [
       {
-        "uuid": "1b11ebfd-9efc-44cd-a379-675fcfe3daa1",
+        "uuid": "f6ee0bbc-0b86-4df3-88cb-292489f1ef0f",
+        "title": "Client Request Objects",
+        "fullFile": "/home/ubuntu/workspace/test/crud_clientRequest.js",
+        "file": "/test/crud_clientRequest.js",
+        "beforeHooks": [
+          {
+            "title": "\"before all\" hook",
+            "fullTitle": "Client Request Objects \"before all\" hook",
+            "timedOut": false,
+            "duration": 633,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "mongoose.connect(\n    \"mongodb://test:test@ds123658.mlab.com:23658/projet-test\"\n);\nmongoose.connection.once('open', function() {\n    done();\n})\n.on('error', function(error) {\n    console.warn('Error', error);\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "9c887716-6df6-4ec2-9e7c-633c70c0216c",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "can create a new object",
+            "fullTitle": "Client Request Objects can create a new object",
+            "timedOut": false,
+            "duration": 132,
+            "state": "passed",
+            "speed": "slow",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var clientRequestX = new clientRequest({\n    isTest: true\n});\n\nclientRequestX.save(function(err, result){\n    if(err) throw err;\n    done();\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "d1a88ddc-b1a5-4a47-b45b-5d11bf4f465e",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "d1a88ddc-b1a5-4a47-b45b-5d11bf4f465e"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 132,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 5000
+      },
+      {
+        "uuid": "dcacc63d-47c6-41dd-bd59-41025bf671ba",
         "title": "My feature",
-        "fullFile": "/home/ubuntu/workspace/test.js",
-        "file": "/test.js",
+        "fullFile": "/home/ubuntu/workspace/test/sample.js",
+        "file": "/test/sample.js",
         "beforeHooks": [],
         "afterHooks": [],
         "tests": [],
         "suites": [
           {
-            "uuid": "f66f6812-b86e-489f-8997-678b0b11bc46",
+            "uuid": "36774621-19d1-4e7d-bff3-899f61b36c9e",
             "title": "subfeature 1",
-            "fullFile": "/home/ubuntu/workspace/test.js",
-            "file": "/test.js",
+            "fullFile": "/home/ubuntu/workspace/test/sample.js",
+            "file": "/test/sample.js",
             "beforeHooks": [],
             "afterHooks": [],
             "tests": [
@@ -57,7 +111,7 @@
                 "code": "",
                 "err": {},
                 "isRoot": false,
-                "uuid": "a8995038-00c1-4f6a-83a8-c636f455a774",
+                "uuid": "fe94cbbc-8d46-4da4-bf39-f9a67ebc9a01",
                 "isHook": false,
                 "skipped": false
               },
@@ -74,15 +128,15 @@
                 "code": "",
                 "err": {},
                 "isRoot": false,
-                "uuid": "d976f4b8-7e23-403e-8983-071acbaea1e4",
+                "uuid": "1377cb93-08a3-458b-bb12-c39b9dc716e2",
                 "isHook": false,
                 "skipped": false
               }
             ],
             "suites": [],
             "passes": [
-              "a8995038-00c1-4f6a-83a8-c636f455a774",
-              "d976f4b8-7e23-403e-8983-071acbaea1e4"
+              "fe94cbbc-8d46-4da4-bf39-f9a67ebc9a01",
+              "1377cb93-08a3-458b-bb12-c39b9dc716e2"
             ],
             "failures": [],
             "pending": [],
@@ -90,13 +144,13 @@
             "duration": 0,
             "root": false,
             "rootEmpty": false,
-            "_timeout": 2000
+            "_timeout": 5000
           },
           {
-            "uuid": "9875806b-e6ef-43b4-a795-9a0a05baf7be",
+            "uuid": "21c02c17-83d9-49ae-9738-5cb8febb0579",
             "title": "subfeature 2",
-            "fullFile": "/home/ubuntu/workspace/test.js",
-            "file": "/test.js",
+            "fullFile": "/home/ubuntu/workspace/test/sample.js",
+            "file": "/test/sample.js",
             "beforeHooks": [],
             "afterHooks": [],
             "tests": [
@@ -113,7 +167,7 @@
                 "code": "",
                 "err": {},
                 "isRoot": false,
-                "uuid": "0bbc956e-fb90-4953-b421-40cc86c2ec05",
+                "uuid": "9f25fbbd-6c77-4369-ab9b-4c38b8c8e14c",
                 "isHook": false,
                 "skipped": false
               },
@@ -130,15 +184,15 @@
                 "code": "",
                 "err": {},
                 "isRoot": false,
-                "uuid": "19a9fffa-696e-4ae3-ad6c-f318f5f4881f",
+                "uuid": "712cf15f-f2b2-4a10-b236-91741754dced",
                 "isHook": false,
                 "skipped": false
               }
             ],
             "suites": [],
             "passes": [
-              "0bbc956e-fb90-4953-b421-40cc86c2ec05",
-              "19a9fffa-696e-4ae3-ad6c-f318f5f4881f"
+              "9f25fbbd-6c77-4369-ab9b-4c38b8c8e14c",
+              "712cf15f-f2b2-4a10-b236-91741754dced"
             ],
             "failures": [],
             "pending": [],
@@ -146,7 +200,7 @@
             "duration": 0,
             "root": false,
             "rootEmpty": false,
-            "_timeout": 2000
+            "_timeout": 5000
           }
         ],
         "passes": [],
@@ -156,7 +210,7 @@
         "duration": 0,
         "root": false,
         "rootEmpty": false,
-        "_timeout": 2000
+        "_timeout": 5000
       }
     ],
     "passes": [],
@@ -166,7 +220,7 @@
     "duration": 0,
     "root": true,
     "rootEmpty": true,
-    "_timeout": 2000
+    "_timeout": 5000
   },
   "copyrightYear": 2018
 }

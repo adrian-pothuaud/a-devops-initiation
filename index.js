@@ -6,7 +6,7 @@ const requestIp = require('request-ip');
 const PORT = process.env.PORT || 5000;
 
 var clientRequestSchema = require('./schemas/clientRequest');
-var clientRequest = mongoose.model('Blog', clientRequestSchema);
+var clientRequest = mongoose.model('clientRequest', clientRequestSchema);
 
 mongoose.connect(
     "mongodb://test:test@ds123658.mlab.com:23658/projet-test"

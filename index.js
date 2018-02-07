@@ -78,8 +78,6 @@ var app = express();
                 	], (err, result) => {
                         if (err) throw err;
                         
-                        console.log(result);
-                        
                         var finalDates = [];
                         var finalCpts = [];
                         
@@ -87,9 +85,6 @@ var app = express();
                             finalDates.push(resu["_id"]);
                             finalCpts.push(resu["count"]);
                         }
-                        
-                        console.log(finalCpts);
-                        console.log(finalDates);
                         
                         var plotly = require('plotly')('adrianpothuaud', 'OWRADETaAnxEYCmnrIlf');
 

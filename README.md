@@ -7,10 +7,12 @@ Un projet test orienté DevOps avec
 - Gulp.js (actions de build automatiques)
 - Mocha (tests)
 - Cucumber.js (BDD)
-- CodeShip (intégration et déploiement continu) : [ ![Codeship Status for adrianpothuaud/projet-test](https://app.codeship.com/projects/837e67e0-e97d-0135-f6f9-0a40330e9728/status?branch=master)](https://app.codeship.com/projects/269888)
+- CodeShip (intégration et déploiement continu) : [lien](https://app.codeship.com/projects/269888)
+- Snyk pour tests de sécurité des applications Node.js
+- Plotly pour réaliser des graphiques (monitoring)
 
-## Test de vulnérabilités
+# Status
 
 - [Snyk] (https://snyk.io/) : [![Known Vulnerabilities](https://snyk.io/test/github/adrianpothuaud/projet-test/badge.svg?targetFile=package.json)](https://snyk.io/test/github/adrianpothuaud/projet-test?targetFile=package.json)
-
+- CodeShip: [ ![Codeship Status for adrianpothuaud/projet-test](https://app.codeship.com/projects/837e67e0-e97d-0135-f6f9-0a40330e9728/status?branch=master)]
 

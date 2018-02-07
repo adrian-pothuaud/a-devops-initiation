@@ -72,6 +72,8 @@ var app = express();
                 					$sum: 1
                 				}
                 			}
+                		},{
+                		    $sort: { _id : 1 }
                 		}
                 	], (err, result) => {
                         if (err) throw err;

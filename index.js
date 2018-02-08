@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 5000;
 var clientRequestSchema = require('./schemas/clientRequest');
 var clientRequest = mongoose.model('clientRequest', clientRequestSchema);
 
+var codePushSchema = require('./schemas/codePush');
+var codePush = mongoose.model('codePushSchema', codePushSchema);
+
+var deploySchema = require('./schemas/deploy');
+var deploy = mongoose.model('deploy', deploySchema);
+
 var app = express();
 
     app    
@@ -58,24 +64,14 @@ var app = express();
                 if (err) throw err;
                 
                 clientRequest.aggregate(
-                	[
-                		{
-                			$match:{
-                				
-                			}
-                		},
-                		{
-                			$group:{
-                				_id: { $dateToString: { format: "%m,%d %Hh", date: "$date" }}
-                				,
-                				count: {
-                					$sum: 1
-                				}
-                			}
-                		},{
-                		    $sort: { _id : 1 }
+                	[{
+                		$group:{
+                			_id: { $dateToString: { format: "%m,%d %Hh", date: "$date" }},
+                			count: { $sum: 1 }
                 		}
-                	], (err, result) => {
+                	},{
+                	    $sort: { _id : 1 }
+                	}], (err, result) => {
                         if (err) throw err;
                         
                         var finalDates = [];
@@ -95,19 +91,39 @@ var app = express();
                             type: "scatter"
                           }
                         ];
-                        var graphOptions = {filename: "date-axes", fileopt: "overwrite"};
+                        
+                        var graphOptions = {filename: "requests", fileopt: "overwrite"};
+                        
                         plotly.plot(data, graphOptions, function (err, msg) {
                             if(err) throw err;
                             res.render('pages/requests');
                         });
                     }
                 );
-
-                /*clientRequest.find({}, 'date', (err, results) => {
-                    if (err) throw err;
-                    
-                    res.render('pages/requests', {"requests": results});
-                });*/
+            });
+        })
+        
+        .get('/pushs', (req, res) => {
+            res.render('pages/pushs');
+        })
+        
+        .post('/pushs', (req, res) => {
+            var cp = new codePush();
+            cp.save(function(err, result) {
+                if (err) throw err;
+                console.log("code push added");
+            });
+        })
+        
+        .get('/deployments', (req, res) => {
+            res.render('pages/deployments');
+        })
+        
+        .post('/deployments', (req, res) => {
+            var d = new deploy();
+            d.save(function(err, result) {
+                if (err) throw err;
+                console.log("deployment added");
             });
         });
 

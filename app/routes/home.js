@@ -12,7 +12,7 @@ module.exports = {
         });
         cr.save(function(err, result) {
             if (err) throw err;
-            res.render('pages/index');
+            res.render('index');
         });
     }
 }

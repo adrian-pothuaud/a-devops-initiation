@@ -40,7 +40,7 @@ module.exports = {
                     var graphOptions = {filename: "deploys", fileopt: "overwrite"};
                     plotly.plot(data, graphOptions, function (err, msg) {
                         if(err) throw err;
-                        res.render('pages/deployments');
+                        res.render('deployments');
                     });
                 }
             );

@@ -18,8 +18,7 @@ if (process.env.NODE_ENV == "DEV") { console.log("NPM Dependencies loaded...") }
  */
 const PORT = process.env.PORT 
     || 5000;
-const dbConnString = process.env.DBCOSTR 
-    || "mongodb://test:test@ds123658.mlab.com:23658/projet-test";
+const dbConnString = process.env.DBCOSTR;
 if (process.env.NODE_ENV == "DEV") { 
     console.log("Globales defined PORT:" + PORT + " dbConnString:" + dbConnString) 
 }

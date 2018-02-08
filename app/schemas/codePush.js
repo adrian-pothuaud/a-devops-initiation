@@ -14,7 +14,8 @@ var Schema = mongoose.Schema;
 var codePushSchema = new Schema({
     dev: String,
     date: { type: Date, default: Date.now },
-    isTest: { type: Boolean, default: false }
+    isTest: { type: Boolean, default: false },
+    nodeenv: { type: String, default: process.env.NODE_ENV }
 });
 
 // exports schema

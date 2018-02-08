@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
-var clientRequestSchema = require('../schemas/clientRequest');
-var clientRequest = mongoose.model('clientRequest', clientRequestSchema);
+var clientRequest = require('../app/models').clientRequest;
 
 describe("Client Request Objects", () => {
     

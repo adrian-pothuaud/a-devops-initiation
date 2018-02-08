@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
-var codePush = require('../app/models').codePush;
+var deploy = require('../app/models').deploy;
 
-describe("Code Push Objects", () => {
+describe("Deployment Objects", () => {
     
     before((done) => {
         mongoose.connect(
@@ -17,11 +17,11 @@ describe("Code Push Objects", () => {
     
     it("can create a new object", (done) => {
         
-        var codePushX = new codePush({
+        var deployX = new deploy({
             isTest: true
         });
         
-        codePushX.save((err, result) => {
+        deployX.save((err, result) => {
             if(err) throw err;
             done();
         });

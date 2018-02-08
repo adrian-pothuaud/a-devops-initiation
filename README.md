@@ -22,17 +22,17 @@ Un projet test orienté DevOps avec
 - [x] Contrôle de version
 - [x] Triggers (push)
 - [x] Développement Agile
-	- [] Tests
+	- [ ] Tests
 		- [x] unitaires
-		- [] end-to-end
+		- [ ] end-to-end
 - [x] Intégration continue
 - [x] Déploiement continu
-- [] Monitoring
+- [x] Monitoring
 	- [x] server requests
-	- [] code push
-	- [] déploiements
+	- [x] code push
+	- [x] déploiements
 # Status
-- Sécurité(Snyk) (https://snyk.io/) : 
+- Sécurité (https://snyk.io/) : 
 [![Known Vulnerabilities](https://snyk.io/test/github/adrianpothuaud/projet-test/badge.svg?targetFile=package.json)](https://snyk.io/test/github/adrianpothuaud/projet-test?targetFile=package.json)
 - Intégration et déploiement continue (CodeShip): 
 ![Codeship Status for adrianpothuaud/projet-test](https://app.codeship.com/projects/837e67e0-e97d-0135-f6f9-0a40330e9728/status?branch=master)
@@ -43,19 +43,22 @@ Un projet test orienté DevOps avec
 # Build
     gulp
 # Tests
+
+via NPM
+
     npm test
-or:
-- Tests de vulnérabilités
-	  snyk
-- Tests unitaires
-	  mocha --timeout 5000 --reporter mochawesome --exit
-- End-to-end tests
-	- à venir (Cucumber.js)
-- Update tests report
-	  chmod +x monitoring/testReports.sh
-	  monitoring/testReports.sh
+ou:
+
+    snyk
+    mocha --timeout 5000 --reporter mochawesome --exit
+Mise à jour des rapport de tests:
+    
+    chmod +x monitoring/testReports.sh
+    monitoring/testReports.sh
+
 # Deploiement
     git remote add heroku_projet-test git@heroku.com:projet-test.git
     git push heroku_projet-test $CI_COMMIT_ID:refs/heads/master
     heroku restart --app projet-test
+
 [Application](https://projet-test.herokuapp.com/)

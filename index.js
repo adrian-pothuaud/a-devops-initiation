@@ -1,242 +1,67 @@
+/****** 
+ * Main server file
+ * ******/
+
+ /**
+ * NPM Dependencies
+ */
 const express = require('express');
 const path = require('path');
 var mongoose = require('mongoose');
 const requestIp = require('request-ip');
+require('dotenv').load();
+if (process.env.NODE_ENV == "DEV") { console.log("NPM Dependencies loaded...") }
+// ---
 
-const PORT = process.env.PORT || 5000;
+/**
+ * GLOBALS
+ */
+const PORT = process.env.PORT 
+    || 5000;
+const dbConnString = process.env.DBCOSTR 
+    || "mongodb://test:test@ds123658.mlab.com:23658/projet-test";
+if (process.env.NODE_ENV == "DEV") { 
+    console.log("Globales defined PORT:" + PORT + " dbConnString:" + dbConnString) 
+}
+// ---
 
-var clientRequestSchema = require('./schemas/clientRequest');
-var clientRequest = mongoose.model('clientRequest', clientRequestSchema);
+/**
+ * Application modules
+ */
+// router(s)
+var router = require('./app/routes');
+// ---
 
-var codePushSchema = require('./schemas/codePush');
-var codePush = mongoose.model('codePushSchema', codePushSchema);
+/**
+ * Application Configuration
+ */
+var app = express()
 
-var deploySchema = require('./schemas/deploy');
-var deploy = mongoose.model('deploy', deploySchema);
+app
+    .use(express.static(path.join(__dirname, 'public')))
+    .use(requestIp.mw())
+    .set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .use('/', router);
 
-var app = express();
+if (process.env.NODE_ENV == "DEV") { console.log("App configured...") }
+// ---
 
-    app    
-        .use(express.static(path.join(__dirname, 'public')))
-        .use(express.static(path.join(__dirname, 'mochawesome-report/assets')))
-        .use(requestIp.mw())
-        
-        .set('views', path.join(__dirname, 'views'))
-        .set('view engine', 'ejs')
-        
-        .get('/', (req, res) => {
-            var cr = new clientRequest({
-                page:  "Index",
-                client: req.clientIp,
-                status: req.status,
-                date: new Date(),
-                isTest: false
-            });
-            cr.save(function(err, result) {
-                if (err) throw err;
-                res.render('pages/index');
-            });
-        })
-        
-        .get('/tests', (req, res) => {
-            var cr = new clientRequest({
-                page:  "Tests",
-                client: req.clientIp,
-                status: req.status,
-                date: new Date(),
-                isTest: false
-            });
-            cr.save(function(err, result) {
-                if (err) throw err;
-                res.sendFile(__dirname + '/public/mochawesome.html');
-            });
-        })
-        
-        .get('/requests', (req, res) => {
-            var cr = new clientRequest({
-                page:  "Requests",
-                client: req.clientIp,
-                status: req.status,
-                date: new Date(),
-                isTest: false
-            });
-            cr.save(function(err, result) {
-                if (err) throw err;
-                
-                clientRequest.aggregate(
-                	[{
-                		$group:{
-                			_id: { $dateToString: { format: "%m,%d %Hh", date: "$date" }},
-                			count: { $sum: 1 }
-                		}
-                	},{
-                	    $sort: { _id : 1 }
-                	}], (err, result) => {
-                        if (err) throw err;
-                        
-                        var finalDates = [];
-                        var finalCpts = [];
-                        
-                        for(let resu of result){
-                            finalDates.push(resu["_id"]);
-                            finalCpts.push(resu["count"]);
-                        }
-                        
-                        var plotly = require('plotly')('adrianpothuaud', 'OWRADETaAnxEYCmnrIlf');
-
-                        var data = [
-                          {
-                            x: finalDates,
-                            y: finalCpts,
-                            type: "scatter"
-                          }
-                        ];
-                        
-                        var graphOptions = {filename: "requests", fileopt: "overwrite"};
-                        
-                        plotly.plot(data, graphOptions, function (err, msg) {
-                            if(err) throw err;
-                            res.render('pages/requests');
-                        });
-                    }
-                );
-            });
-        })
-        
-        .get('/pushs', (req, res) => {
-            
-            var cr = new clientRequest({
-                page:  "Pushs",
-                client: req.clientIp,
-                status: req.status,
-                date: new Date(),
-                isTest: false
-            });
-            cr.save(function(err, result) {
-                if (err) throw err;
-                
-                codePush.aggregate(
-                	[{
-                		$group:{
-                			_id: { $dateToString: { format: "%m,%d %Hh", date: "$date" }},
-                			count: { $sum: 1 }
-                		}
-                	},{
-                	    $sort: { _id : 1 }
-                	}], (err, result) => {
-                        if (err) throw err;
-                        
-                        var finalDates = [];
-                        var finalCpts = [];
-                        
-                        for(let resu of result){
-                            finalDates.push(resu["_id"]);
-                            finalCpts.push(resu["count"]);
-                        }
-                        
-                        var plotly = require('plotly')('adrianpothuaud', 'OWRADETaAnxEYCmnrIlf');
-
-                        var data = [
-                          {
-                            x: finalDates,
-                            y: finalCpts,
-                            type: "scatter"
-                          }
-                        ];
-                        
-                        var graphOptions = {filename: "pushs", fileopt: "overwrite"};
-                        
-                        plotly.plot(data, graphOptions, function (err, msg) {
-                            if(err) throw err;
-                            res.render('pages/pushs');
-                        });
-                    }
-                );
-            });
-        })
-        
-        .post('/pushs', (req, res) => {
-            var cp = new codePush();
-            cp.save(function(err, result) {
-                if (err) throw err;
-                console.log("code push added");
-            });
-        })
-        
-        .get('/deployments', (req, res) => {
-            
-            var cr = new clientRequest({
-                page:  "Deployments",
-                client: req.clientIp,
-                status: req.status,
-                date: new Date(),
-                isTest: false
-            });
-            cr.save(function(err, result) {
-                if (err) throw err;
-                
-                deploy.aggregate(
-                	[{
-                		$group:{
-                			_id: { $dateToString: { format: "%m,%d %Hh", date: "$date" }},
-                			count: { $sum: 1 }
-                		}
-                	},{
-                	    $sort: { _id : 1 }
-                	}], (err, result) => {
-                        if (err) throw err;
-                        
-                        var finalDates = [];
-                        var finalCpts = [];
-                        
-                        for(let resu of result){
-                            finalDates.push(resu["_id"]);
-                            finalCpts.push(resu["count"]);
-                        }
-                        
-                        var plotly = require('plotly')('adrianpothuaud', 'OWRADETaAnxEYCmnrIlf');
-
-                        var data = [
-                          {
-                            x: finalDates,
-                            y: finalCpts,
-                            type: "scatter"
-                          }
-                        ];
-                        
-                        var graphOptions = {filename: "deploys", fileopt: "overwrite"};
-                        
-                        plotly.plot(data, graphOptions, function (err, msg) {
-                            if(err) throw err;
-                            res.render('pages/deployments');
-                        });
-                    }
-                );
-            });
-        })
-        
-        .post('/deployments', (req, res) => {
-            var d = new deploy();
-            d.save(function(err, result) {
-                if (err) throw err;
-                console.log("deployment added");
-            });
-        });
-
-mongoose.connect(
-    "mongodb://test:test@ds123658.mlab.com:23658/projet-test"
-);
-
+/**
+ * DATABASE Connection
+ */
+mongoose.connect(dbConnString);
 mongoose.connection
+    .once('open', function() {
+        if (process.env.NODE_ENV == "DEV") { console.log("Connected to DB...") }
+        app.listen(PORT, () => {
+            if (process.env.NODE_ENV == "DEV") { console.log(`App is listening on ${ PORT }`) }
+        });
+    })
+    .on('error', function(error) {
+        console.warn('Error on DB connection', error);
+    });
+// ---
 
-.once('open', function() {
-    
-    app
-        .listen(PORT, () => console.log(`Listening on ${ PORT }`));
-})
-
-.on('error', function(error) {
-    console.warn('Error', error);
-});
-
+// export app for tests
 module.exports = app;

@@ -1,6 +1,16 @@
+/****** 
+ * Define client requests schema
+ * ******/
+
+/**
+ * NPM Dependencies
+ */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/**
+ * Schema Definition
+ */
 var clientRequestSchema = new Schema({
     page:  String,
     client: String,
@@ -9,4 +19,5 @@ var clientRequestSchema = new Schema({
     isTest: { type: Boolean, default: false }
 });
 
+// export schema
 module.exports = clientRequestSchema;
